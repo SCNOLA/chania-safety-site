@@ -266,3 +266,60 @@ footer {
 footer a {
   color: var(--accent);
 }
+
+@media (max-width: 600px) {
+  header.hero {
+    padding: 28px 16px 12px;
+  }
+
+  header.hero h1 {
+    font-size: 1.5rem;
+  }
+
+  header.hero p {
+    font-size: 0.9rem;
+  }
+
+  main {
+    padding: 14px;
+  }
+
+  section {
+    margin-bottom: 30px;
+  }
+
+  section h2 {
+    font-size: 1.05rem;
+  }
+
+  .contact-grid,
+  .link-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .forecast-strip {
+    grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+    gap: 8px;
+  }
+
+  .forecast-day {
+    padding: 10px 6px;
+  }
+
+  .forecast-day .icon {
+    font-size: 1.6rem;
+    margin: 6px 0 2px;
+  }
+
+  .forecast-day .temps {
+    font-size: 0.85rem;
+  }
+
+  .embed-wrap iframe {
+    height: 320px !important;
+  }
+
+  .contact-card .number {
+    font-size: 1.8rem;
+  }
+}

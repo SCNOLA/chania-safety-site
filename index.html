@@ -20,7 +20,11 @@
       <div class="forecast-strip" id="forecast-strip">
         <p class="note">Loading live forecast…</p>
       </div>
-      <p class="note">Live data fetched on page load from <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a> (free, public weather API, no key required).</p>
+      <div class="live-status">
+        <span class="status-text" id="forecast-status-text">Loading…</span>
+        <button class="refresh-btn" id="forecast-refresh" type="button">⟳ Refresh</button>
+      </div>
+      <p class="note">Data from <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a> (free, public weather API, no key required).</p>
     </section>
 
     <section id="weather">
@@ -65,6 +69,13 @@
 
     <section id="air-quality">
       <h2>Live Air Quality — Chania</h2>
+      <div class="aqi-card" id="aqi-card">
+        <p class="note">Loading live air quality…</p>
+      </div>
+      <div class="live-status">
+        <span class="status-text" id="aqi-status-text">Loading…</span>
+        <button class="refresh-btn" id="aqi-refresh" type="button">⟳ Refresh</button>
+      </div>
       <div class="link-grid">
         <a class="link-card" href="https://www.iqair.com/eu/air-quality/greece/crete/chania" target="_blank" rel="noopener">
           <div class="title">IQAir — Chania</div>

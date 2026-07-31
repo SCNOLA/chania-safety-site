@@ -1,6 +1,11 @@
 const CHANIA_LAT = 35.5138;
 const CHANIA_LON = 24.0180;
 
+// Free NASA FIRMS rate-limiting key — not a login credential, designed to be used
+// openly in public tile URLs (NASA's own docs embed it the same way).
+const FIRMS_MAP_KEY = 'e31606c855138484f21659534b7d4d64';
+const FIRMS_LAYERS = 'fires_viirs_snpp_24,fires_viirs_noaa20_24,fires_viirs_noaa21_24';
+
 const WEATHER_ICONS = {
   0: '☀️', 1: '🌤️', 2: '⛅', 3: '☁️',
   45: '🌫️', 48: '🌫️',
@@ -153,6 +158,54 @@ document.getElementById('aqi-refresh')?.addEventListener('click', loadAirQuality
 
 loadForecast();
 loadAirQuality();
+
+let firmsWmsLayer = null;
+
+function setupFirmsMap() {
+  const container = document.getElementById('firms-map');
+  const statusEl = document.getElementById('firms-status-text');
+  const btn = document.getElementById('firms-refresh');
+  if (!container || typeof L === 'undefined') return;
+
+  const map = L.map('firms-map').setView([CHANIA_LAT, CHANIA_LON], 9);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 12,
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+  }).addTo(map);
+
+  L.marker([CHANIA_LAT, CHANIA_LON]).addTo(map).bindPopup('Chania');
+
+  function addFirmsLayer() {
+    if (firmsWmsLayer) map.removeLayer(firmsWmsLayer);
+    firmsWmsLayer = L.tileLayer.wms(`https://firms.modaps.eosdis.nasa.gov/mapserver/wms/fires/${FIRMS_MAP_KEY}/`, {
+      layers: FIRMS_LAYERS,
+      format: 'image/png',
+      transparent: true,
+      version: '1.1.1',
+      _t: Date.now(), // cache-bust so "Refresh" actually re-fetches instead of reusing cached tiles
+      attribution: '<a href="https://firms.modaps.eosdis.nasa.gov/" target="_blank" rel="noopener">NASA FIRMS</a>'
+    });
+    firmsWmsLayer.on('load', () => {
+      if (btn) { btn.disabled = false; btn.textContent = '⟳ Refresh'; }
+      if (statusEl) statusEl.textContent = `Data as of ${formatTime(new Date())}`;
+    });
+    firmsWmsLayer.addTo(map);
+  }
+
+  if (btn) {
+    btn.addEventListener('click', () => {
+      btn.disabled = true;
+      btn.textContent = '⟳ Refreshing…';
+      if (statusEl) statusEl.textContent = 'Loading…';
+      addFirmsLayer();
+    });
+  }
+
+  addFirmsLayer();
+}
+
+setupFirmsMap();
 
 function setupHelpModal() {
   const helpBtn = document.getElementById('help-btn');

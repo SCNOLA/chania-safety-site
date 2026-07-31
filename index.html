@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Chania Wildfire Safety — Live Maps &amp; Contacts</title>
 <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 </head>
 <body>
 
@@ -36,14 +37,18 @@
             <td><strong>Live Weather &amp; Wind map</strong><br><span class="src-name">Windy.com</span></td>
             <td>Embedded interactive wind/weather map using the ECMWF forecast model.</td>
           </tr>
+          <tr>
+            <td><strong>Live Fire Hotspot map</strong><br><span class="src-name">NASA FIRMS WMS</span></td>
+            <td>Real satellite-detected thermal anomalies (VIIRS, last 24h), rendered on our own Leaflet map. Requires a free, non-secret rate-limiting key (not a login credential).</td>
+          </tr>
         </table>
 
         <h3>External links (open in a new tab)</h3>
         <p class="note" style="margin-top:0;">These sites don't allow being embedded inline (they send security headers that block framing by other sites), so they open separately instead.</p>
         <table class="source-table">
           <tr>
-            <td><strong>NASA FIRMS</strong></td>
-            <td>Satellite-detected active fire hotspots (VIIRS/MODIS). U.S. government / NASA.</td>
+            <td><strong>NASA FIRMS — Full Map</strong></td>
+            <td>NASA's own full interactive fire map — more detail, layers, and history than the embedded version above.</td>
           </tr>
           <tr>
             <td><strong>Copernicus EFFIS</strong></td>
@@ -106,10 +111,23 @@
 
     <section id="fire-maps">
       <h2>Live Fire &amp; Smoke Maps</h2>
+
+      <div class="embed-wrap">
+        <div id="firms-map" style="height:420px;"></div>
+      </div>
+      <div class="live-status">
+        <span class="status-text" id="firms-status-text">Loading…</span>
+        <button class="refresh-btn" id="firms-refresh" type="button">⟳ Refresh</button>
+      </div>
+      <p class="note">
+        Live satellite fire hotspots (VIIRS, last 24h) from <a href="https://firms.modaps.eosdis.nasa.gov/" target="_blank" rel="noopener">NASA FIRMS</a>, centered on Chania.
+        Each marker is a detected thermal anomaly — not every one is a wildfire (can include controlled burns, industrial heat sources, or false positives), and a lack of markers doesn't guarantee there's no fire, only that satellites haven't flagged one in the last pass.
+      </p>
+
       <div class="link-grid">
         <a class="link-card" href="https://firms.modaps.eosdis.nasa.gov/map/#d:24hrs;@24.02,35.51,9z" target="_blank" rel="noopener">
-          <div class="title">NASA FIRMS — Active Fire Map</div>
-          <div class="desc">Satellite-detected fire hotspots (VIIRS/MODIS) from the last 24 hours, centered on Chania. On mobile, swipe/collapse the layer panel if it covers the map — that's FIRMS' own site UI.</div>
+          <div class="title">NASA FIRMS — Full Map</div>
+          <div class="desc">Same data, NASA's own full interactive map with more detail, layers, and history.</div>
         </a>
         <a class="link-card" href="https://forest-fire.emergency.copernicus.eu/apps/effis.csv/?c=1000000,6200000&z=5&t=sentinel2" target="_blank" rel="noopener">
           <div class="title">Copernicus EFFIS — Current Situation</div>
@@ -125,9 +143,7 @@
         </a>
       </div>
       <p class="note">
-        These sites block being embedded inline (they send an <code>X-Frame-Options</code> header that
-        stops any other site from framing them) — that's their own security setting, not something this page can override, so they open in a new tab instead.
-        NASA FIRMS also offers a real hotspot-data layer via a personal (free) MAP_KEY — let me know if you want that wired in later.
+        The full-map links above block being embedded inline (they send security headers that stop other sites from framing them), so they open in a new tab instead.
       </p>
     </section>
 
@@ -190,6 +206,7 @@
     <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a>
   </footer>
 
-  <script src="script.js?v=2"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="script.js?v=3"></script>
 </body>
 </html>

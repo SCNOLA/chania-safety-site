@@ -169,9 +169,12 @@ function setupFirmsMap() {
 
   const map = L.map('firms-map').setView([CHANIA_LAT, CHANIA_LON], 9);
 
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  // CARTO Voyager: English/Latin-script place labels (plain OSM tiles default to local-language
+  // labels, i.e. Greek here), and avoids hitting OSM's own tile servers directly per their usage policy.
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
     maxZoom: 12,
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    subdomains: 'abcd',
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
   }).addTo(map);
 
   L.marker([CHANIA_LAT, CHANIA_LON]).addTo(map).bindPopup('Chania');

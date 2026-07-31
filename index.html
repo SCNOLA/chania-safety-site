@@ -8,6 +8,70 @@
 </head>
 <body>
 
+  <button id="help-btn" class="help-btn" type="button" aria-haspopup="dialog" aria-controls="help-modal" aria-label="Help: what data sources this site uses">?</button>
+
+  <div id="help-modal" class="modal-overlay" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="help-title">
+      <div class="modal-header">
+        <h2 id="help-title">Data Sources on This Page</h2>
+        <button id="help-close" class="modal-close" type="button" aria-label="Close">✕</button>
+      </div>
+      <div class="modal-body">
+
+        <h3>Live data shown directly on this page</h3>
+        <table class="source-table">
+          <tr>
+            <td><strong>5-Day Forecast</strong><br><span class="src-name">Open-Meteo Weather API</span></td>
+            <td>Air temperature (hi/lo), wind speed, and rain probability. Free, public, no API key.</td>
+          </tr>
+          <tr>
+            <td><strong>Sea temperature</strong> (🌊 in forecast)<br><span class="src-name">Open-Meteo Marine API</span></td>
+            <td>Hourly sea-surface temperature, averaged per day here. Free, public, no API key.</td>
+          </tr>
+          <tr>
+            <td><strong>Live Air Quality card</strong><br><span class="src-name">Open-Meteo Air Quality API</span></td>
+            <td>US AQI, PM2.5, and PM10 for Chania's coordinates. Free, public, no API key.</td>
+          </tr>
+          <tr>
+            <td><strong>Live Weather &amp; Wind map</strong><br><span class="src-name">Windy.com</span></td>
+            <td>Embedded interactive wind/weather map using the ECMWF forecast model.</td>
+          </tr>
+        </table>
+
+        <h3>External links (open in a new tab)</h3>
+        <p class="note" style="margin-top:0;">These sites don't allow being embedded inline (they send security headers that block framing by other sites), so they open separately instead.</p>
+        <table class="source-table">
+          <tr>
+            <td><strong>NASA FIRMS</strong></td>
+            <td>Satellite-detected active fire hotspots (VIIRS/MODIS). U.S. government / NASA.</td>
+          </tr>
+          <tr>
+            <td><strong>Copernicus EFFIS</strong></td>
+            <td>EU's official European Forest Fire Information System — fires, danger forecast, burnt area.</td>
+          </tr>
+          <tr>
+            <td><strong>Greek Fire Service</strong></td>
+            <td>Official announcements from the Hellenic Fire Service (Πυροσβεστικό Σώμα).</td>
+          </tr>
+          <tr>
+            <td><strong>112 Greece (X/Twitter)</strong></td>
+            <td>Official real-time evacuation orders from Greek Civil Protection.</td>
+          </tr>
+          <tr>
+            <td><strong>IQAir</strong></td>
+            <td>Station-based real-time air quality reading for Chania.</td>
+          </tr>
+          <tr>
+            <td><strong>World Air Quality Index (WAQI)</strong></td>
+            <td>Regional air quality map aggregating multiple monitoring stations.</td>
+          </tr>
+        </table>
+
+        <p class="note">All live-data sources above are free and require no account or API key. None of them are official emergency services — always defer to 112 / Greek Civil Protection for real-time alerts.</p>
+      </div>
+    </div>
+  </div>
+
   <header class="hero">
     <h1>Chania Wildfire Safety Dashboard</h1>
     <p>One page for wildfire safety in Chania: live weather, sea conditions, fire maps, air quality, and emergency contacts.</p>

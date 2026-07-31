@@ -153,3 +153,33 @@ document.getElementById('aqi-refresh')?.addEventListener('click', loadAirQuality
 
 loadForecast();
 loadAirQuality();
+
+function setupHelpModal() {
+  const helpBtn = document.getElementById('help-btn');
+  const modal = document.getElementById('help-modal');
+  const closeBtn = document.getElementById('help-close');
+  if (!helpBtn || !modal || !closeBtn) return;
+
+  function open() {
+    modal.hidden = false;
+    closeBtn.focus();
+  }
+
+  function close() {
+    modal.hidden = true;
+    helpBtn.focus();
+  }
+
+  helpBtn.addEventListener('click', open);
+  closeBtn.addEventListener('click', close);
+
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) close();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !modal.hidden) close();
+  });
+}
+
+setupHelpModal();

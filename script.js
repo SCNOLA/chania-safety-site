@@ -25,6 +25,18 @@ function formatTime(d) {
   return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 }
 
+// fetch() has no built-in timeout — on a slow/flaky connection a stalled request
+// would otherwise hang forever with the refresh button stuck disabled.
+function fetchWithTimeout(url, ms = 10000) {
+  const controller = new AbortController();
+  const id = setTimeout(() => controller.abort(), ms);
+  return fetch(url, { signal: controller.signal }).finally(() => clearTimeout(id));
+}
+
+function friendlyError(err) {
+  return err.name === 'AbortError' ? 'timed out — check your connection' : err.message;
+}
+
 // Averages hourly sea_surface_temperature readings into one value per calendar day (YYYY-MM-DD).
 function dailySeaTemps(hourlyTimes, hourlyTemps, days) {
   const byDay = {};
@@ -55,7 +67,8 @@ async function loadForecast() {
   const statusEl = document.getElementById('forecast-status-text');
   const btn = document.getElementById('forecast-refresh');
   if (!el) return;
-  if (btn) btn.disabled = true;
+  if (btn) { btn.disabled = true; btn.textContent = '⟳ Refreshing…'; }
+  if (statusEl) statusEl.textContent = 'Loading…';
 
   const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${CHANIA_LAT}&longitude=${CHANIA_LON}` +
     `&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_probability_mean,windspeed_10m_max` +
@@ -65,7 +78,7 @@ async function loadForecast() {
     `&hourly=sea_surface_temperature&timezone=auto&forecast_days=5`;
 
   try {
-    const [weatherRes, marineRes] = await Promise.all([fetch(weatherUrl), fetch(marineUrl)]);
+    const [weatherRes, marineRes] = await Promise.all([fetchWithTimeout(weatherUrl), fetchWithTimeout(marineUrl)]);
     if (!weatherRes.ok) throw new Error(`HTTP ${weatherRes.status}`);
     const data = await weatherRes.json();
     const days = data.daily;
@@ -91,10 +104,10 @@ async function loadForecast() {
 
     if (statusEl) statusEl.textContent = `Data as of ${formatTime(new Date())}`;
   } catch (err) {
-    el.innerHTML = `<p class="note">Couldn't load live forecast right now (${err.message}). Try refreshing, or check <a href="https://www.windy.com/" target="_blank" rel="noopener">Windy.com</a> directly.</p>`;
+    el.innerHTML = `<p class="note">Couldn't load live forecast (${friendlyError(err)}). Try refreshing, or check <a href="https://www.windy.com/" target="_blank" rel="noopener">Windy.com</a> directly.</p>`;
     if (statusEl) statusEl.textContent = 'Failed to load — try refresh';
   } finally {
-    if (btn) btn.disabled = false;
+    if (btn) { btn.disabled = false; btn.textContent = '⟳ Refresh'; }
   }
 }
 
@@ -103,13 +116,14 @@ async function loadAirQuality() {
   const statusEl = document.getElementById('aqi-status-text');
   const btn = document.getElementById('aqi-refresh');
   if (!card) return;
-  if (btn) btn.disabled = true;
+  if (btn) { btn.disabled = true; btn.textContent = '⟳ Refreshing…'; }
+  if (statusEl) statusEl.textContent = 'Loading…';
 
   const url = `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${CHANIA_LAT}&longitude=${CHANIA_LON}` +
     `&current=pm2_5,pm10,us_aqi&timezone=auto`;
 
   try {
-    const res = await fetch(url);
+    const res = await fetchWithTimeout(url);
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
     const c = data.current;
@@ -127,10 +141,10 @@ async function loadAirQuality() {
     `;
     if (statusEl) statusEl.textContent = `Data as of ${formatTime(new Date())}`;
   } catch (err) {
-    card.innerHTML = `<p class="note">Couldn't load live air quality (${err.message}). Use the links below instead.</p>`;
+    card.innerHTML = `<p class="note">Couldn't load live air quality (${friendlyError(err)}). Use the links below instead.</p>`;
     if (statusEl) statusEl.textContent = 'Failed to load — try refresh';
   } finally {
-    if (btn) btn.disabled = false;
+    if (btn) { btn.disabled = false; btn.textContent = '⟳ Refresh'; }
   }
 }
 

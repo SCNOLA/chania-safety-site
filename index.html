@@ -100,6 +100,12 @@
         </iframe>
       </div>
       <p class="note">Wind direction and speed strongly affect how fast wildfire smoke and fire fronts move — check this before assuming an area is safe.</p>
+
+      <h3 style="margin: 24px 0 4px; font-size: 1rem; color: var(--ink-dim);">5-Day Forecast</h3>
+      <div class="forecast-strip" id="forecast-strip">
+        <p class="note">Loading live forecast…</p>
+      </div>
+      <p class="note">Live data fetched on page load from <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a> (free, public weather API, no key required).</p>
     </section>
 
   </main>
@@ -109,8 +115,10 @@
     Sources: <a href="https://firms.modaps.eosdis.nasa.gov/" target="_blank" rel="noopener">NASA FIRMS</a>,
     <a href="https://forest-fire.emergency.copernicus.eu/" target="_blank" rel="noopener">Copernicus EFFIS</a>,
     <a href="https://waqi.info/" target="_blank" rel="noopener">World Air Quality Index</a>,
-    <a href="https://www.windy.com/" target="_blank" rel="noopener">Windy.com</a>
+    <a href="https://www.windy.com/" target="_blank" rel="noopener">Windy.com</a>,
+    <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a>
   </footer>
 
+  <script src="script.js"></script>
 </body>
 </html>

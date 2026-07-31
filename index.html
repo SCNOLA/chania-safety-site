@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chania Wildfire Safety — Live Maps &amp; Contacts</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="banner">
+    <strong>In immediate danger?</strong> Call <strong>112</strong> (EU emergency / Greek Civil Protection) —
+    follow official evacuation orders, don't rely on this page for real-time alerts.
+    Official alerts: <a href="https://x.com/112Greece" target="_blank" rel="noopener">x.com/112Greece</a>
+  </div>
+
+  <header class="hero">
+    <h1>Chania Wildfire Safety Dashboard</h1>
+    <p>Live weather &amp; air quality, plus links to official fire &amp; smoke sources — Chania, Crete</p>
+  </header>
+
+  <main>
+
+    <section id="contacts">
+      <h2>Emergency Contacts (Greece — national numbers)</h2>
+      <div class="contact-grid">
+        <div class="contact-card">
+          <div class="number">112</div>
+          <div class="label">EU Emergency / Civil Protection</div>
+          <div class="desc">Fires, evacuations, any life-threatening emergency. Multilingual.</div>
+        </div>
+        <div class="contact-card">
+          <div class="number">199</div>
+          <div class="label">Fire Service (Πυροσβεστική)</div>
+          <div class="desc">Report a fire directly to the fire brigade.</div>
+        </div>
+        <div class="contact-card">
+          <div class="number">166</div>
+          <div class="label">EKAB — Ambulance</div>
+          <div class="desc">National Center for Emergency Care, medical emergencies.</div>
+        </div>
+        <div class="contact-card">
+          <div class="number">100</div>
+          <div class="label">Police (Αστυνομία)</div>
+          <div class="desc">Police emergency line.</div>
+        </div>
+      </div>
+      <p class="note">These are standard nationwide numbers, valid anywhere in Greece including Chania. This page does not have verified local station numbers — dial one of the above for anything local.</p>
+    </section>
+
+    <section id="fire-maps">
+      <h2>Live Fire &amp; Smoke Maps</h2>
+      <div class="link-grid">
+        <a class="link-card" href="https://firms.modaps.eosdis.nasa.gov/map/#@24.02,35.51,9z" target="_blank" rel="noopener">
+          <div class="title">NASA FIRMS — Active Fire Map</div>
+          <div class="desc">Satellite-detected fire hotspots (VIIRS/MODIS), refreshed every ~15 min–3 hrs. Opens centered on Chania.</div>
+        </a>
+        <a class="link-card" href="https://effis.jrc.ec.europa.eu/apps/effis_current_situation/" target="_blank" rel="noopener">
+          <div class="title">Copernicus EFFIS — Current Situation</div>
+          <div class="desc">EU's official European Forest Fire Information System — active fires, danger forecast, burnt area.</div>
+        </a>
+        <a class="link-card" href="https://www.fireservice.gr" target="_blank" rel="noopener">
+          <div class="title">Greek Fire Service (Πυροσβεστικό Σώμα)</div>
+          <div class="desc">Official announcements and press releases from the Hellenic Fire Service.</div>
+        </a>
+        <a class="link-card" href="https://x.com/112Greece" target="_blank" rel="noopener">
+          <div class="title">112 Greece — Official Alerts (X/Twitter)</div>
+          <div class="desc">Real-time evacuation orders and safety instructions issued by Greek Civil Protection.</div>
+        </a>
+      </div>
+      <p class="note">
+        These sites block being embedded inline (they send an <code>X-Frame-Options</code> header that
+        stops any other site from framing them) — that's their own security setting, not something this page can override, so they open in a new tab instead.
+        NASA FIRMS also offers a real hotspot-data layer via a personal (free) MAP_KEY — let me know if you want that wired in later.
+      </p>
+    </section>
+
+    <section id="air-quality">
+      <h2>Live Air Quality — Chania</h2>
+      <div class="link-grid">
+        <a class="link-card" href="https://www.iqair.com/eu/air-quality/greece/crete/chania" target="_blank" rel="noopener">
+          <div class="title">IQAir — Chania</div>
+          <div class="desc">Station-based real-time AQI, PM2.5, and health recommendations for Chania.</div>
+        </a>
+        <a class="link-card" href="https://waqi.info/#/c/35.5138/24.0180/10z" target="_blank" rel="noopener">
+          <div class="title">World Air Quality Index — Map</div>
+          <div class="desc">Regional air quality map; wildfire smoke shows up as elevated PM2.5.</div>
+        </a>
+      </div>
+    </section>
+
+    <section id="weather">
+      <h2>Live Weather &amp; Wind — Chania</h2>
+      <div class="embed-wrap">
+        <iframe
+          src="https://embed.windy.com/embed2.html?lat=35.514&lon=24.018&detailLat=35.514&detailLon=24.018&width=650&height=450&zoom=9&level=surface&overlay=wind&product=ecmwf&menu=&message=true&marker=true&calendar=now&pressure=&type=map&location=coordinates&detail=&metricWind=default&metricTemp=default&radarRange=-1"
+          height="450"
+          loading="lazy"
+          title="Windy wind and weather map centered on Chania">
+        </iframe>
+      </div>
+      <p class="note">Wind direction and speed strongly affect how fast wildfire smoke and fire fronts move — check this before assuming an area is safe.</p>
+    </section>
+
+  </main>
+
+  <footer>
+    Not an official emergency service. Built as a quick reference — always defer to 112 / Greek Civil Protection announcements.<br>
+    Sources: <a href="https://firms.modaps.eosdis.nasa.gov/" target="_blank" rel="noopener">NASA FIRMS</a>,
+    <a href="https://effis.jrc.ec.europa.eu/" target="_blank" rel="noopener">Copernicus EFFIS</a>,
+    <a href="https://waqi.info/" target="_blank" rel="noopener">World Air Quality Index</a>,
+    <a href="https://www.windy.com/" target="_blank" rel="noopener">Windy.com</a>
+  </footer>
+
+</body>
+</html>
